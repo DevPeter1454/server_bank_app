@@ -100,9 +100,9 @@ const fundWallet = (req, res) => {
                                     console.log(err.message);
                                 }else{
                                     if(wallet){
-                                        if(parseInt(wallet.targetAmount) > (parseInt(req.body.fundAmount) + parseInt(wallet.walletBalance))){
+                                        if(parseInt(wallet.targetAmount) >= (parseInt(req.body.fundAmount) + parseInt(wallet.walletBalance))){
                                             
-                                                walletModel.findByIdAndUpdate(req.body.id, {$inc: {walletBalance: req.body.fundAmount,}}, (err, wallet) => {
+                                                walletModel.findByIdAndUpdate(req.body.id, {$inc: {walletBalance: req.body.fundAmount,}, new:true}, (err, wallet) => {
                                                      if(err){
                                                          res.json({
                                                              message: 'Error in funding wallet',
