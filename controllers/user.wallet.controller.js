@@ -100,8 +100,8 @@ const fundWallet = (req, res) => {
                                     console.log(err.message);
                                 }else{
                                     if(wallet){
-                                        if(wallet.targetAmount > req.body.fundAmount){
-                                                if(wallet.walletBalance < wallet.targetAmount){
+                                        if(wallet.targetAmount > (req.body.fundAmount+ wallet.wallBalance)){
+                                            
                                                 walletModel.findByIdAndUpdate(req.body.id, {$inc: {walletBalance: req.body.fundAmount,}}, (err, wallet) => {
                                                      if(err){
                                                          res.json({
@@ -116,7 +116,7 @@ const fundWallet = (req, res) => {
                                                          });
                                                      }
                                                 });
-                                             }
+                                             
                                         }
                                         else{
                                             res.json({
