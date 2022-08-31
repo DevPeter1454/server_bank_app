@@ -91,7 +91,7 @@ const fundWallet = (req, res) => {
                             });
                             console.log(err.message);
                         }else{
-                            walletModel.findOne({id: req.body.id}, (err, wallet) => {
+                            walletModel.findById(req.body.id, (err, wallet) => {
                                 if(err){
                                     res.json({
                                         message: 'Error in funding wallet',
