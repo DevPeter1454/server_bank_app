@@ -100,7 +100,7 @@ const fundWallet = (req, res) => {
                                     console.log(err.message);
                                 }else{
                                     if(wallet){
-                                        if(wallet.targetAmount > (req.body.fundAmount+ wallet.wallBalance)){
+                                        if(wallet.targetAmount > (req.body.fundAmount+ wallet.walletBalance)){
                                             
                                                 walletModel.findByIdAndUpdate(req.body.id, {$inc: {walletBalance: req.body.fundAmount,}}, (err, wallet) => {
                                                      if(err){
