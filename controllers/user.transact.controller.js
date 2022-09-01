@@ -32,7 +32,7 @@ const getTransactions = (req, res) => {
                 form.forEach(element => {
                     if(element.senderAccount == req.params.senderAccount){
                         allTransactions.push(element);
-                    }else if(element.recieverAccount == req.params.recieverAccount){
+                    }else if(element.recieverAccount == req.params.receiverAccount){
                         allTransactions.push(element);
                     }
                 });         
