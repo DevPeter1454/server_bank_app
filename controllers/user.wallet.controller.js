@@ -163,7 +163,55 @@ const deleteWallet = (req, res) => {
     });
 };
 
+const withdrawFunds = (req, res) => {
+    walletModel.findById(req.params.id, (err, wallet) => {
+        if(err){
+            res.json({
+                message: 'Error in withdrawing funds',
+                error: err.message,
+            });
+            console.log(err.message);
+        }else{
+            if(wallet){
+                if(wallet.walletBalance > req.body.withdrawAmount){
+                    walletModel.findByIdAndUpdate(req.params.id, {$inc: {walletBalance: -req.body.withdrawAmount}}, (err, wallet) => {
+                        if(err){
+                            res.json({
+                                message: 'Error in withdrawing funds',
+                                error: err.message,
+                            });
+                            console.log(err.message);
+                        }else{
+                            if(wallet){
+                                userModel.findOneAndUpdate({accountNumber: req.body.accountNumber}, {$inc: {accountBalance: req.body.withdrawAmount}}, (err, user) => {
+                                    if(err){
+                                        res.json({
+                                            message: 'Error in withdrawing funds',
+                                            error: err.message,
+                                        });
+                                        console.log(err.message);
+                                    }else{
+                                        res.json({
+                                            message: 'Funds withdrawn successfully',
+                                            wallet: wallet,
+                                        });
+                                    }
+                                });
+                            }
+                        }
+                    })
+                }else{
+                    res.json({
+                        message: 'Error in withdrawing funds',
+                        error: 'Insufficient funds in wallet',
+                    });
+                }
+            }
+        }
+    })
+};
 
-module.exports = {getUserWallet, getWallet, fundWallet, deleteWallet};
+
+module.exports = {getUserWallet, getWallet, fundWallet, deleteWallet, withdrawFunds};
 
 
