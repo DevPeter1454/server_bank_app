@@ -18,7 +18,7 @@ router.get('/wallet/:accountNumber', getWallet);
 router.post('/wallet/fund', fundWallet );
 router.get('/wallet/delete/:id', deleteWallet);
 router.post('create/transaction', transact);
-router.get('/get/transactions/', getTransactions);
+router.get('/get/transactions/:senderAccount/:receiverAccount', getTransactions);
 router.post('/wallet/withdraw', withdrawFunds);
 
 module.exports = router;
